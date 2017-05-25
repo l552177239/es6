@@ -126,3 +126,147 @@ class Title extends React.Component{
 export default Title;
 ```
 <img src="http://huzidaha.github.io/static/assets/img/posts/19BBE4E2-A12E-4657-BA6A-61484F67FA60.png" alt="组件树">  
+
+#####  4.事件监听  #####
+
+当你需要为某个元素监听某个事件的时候，只需要简单地给它加上 on* 就可以了。而且你不需要考虑不同浏览器兼容性的问题  
+
+React.js 会给每个事件监听传入一个 event 对象，这个对象提供的功能和浏览器提供的功能一致，而且它是兼容所有浏览器的。  
+
+React.js 的事件监听方法需要手动 bind 到当前实例，这种模式在 React.js 中非常常用。
+
+注意：事件属性名用驼峰命名法！！
+
+事件监听只能用在普通的 HTML 的标签上，不能用在组件标签上！！
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class Title extends Component {
+  handleClick(){
+    console.log('e.target.innerHTML')
+  }
+  render(){
+    return (
+    	<h1 onClick={this.handleClick}>打印标题</h1>
+    )
+  }
+}
+ReactDom.render(<Title/>,document.querySelector('#root'))
+```
+
+事件中的 this：如果你想在事件函数当中使用当前的实例，你需要手动地将实例方法 bind 到当前实例上再传入给 React.js
+
+bind：会把实例方法绑定到当前实例上，然后我们再把绑定后的函数传给 React.js 的 onClick 事件监听。这时候你再看看，点击 h1 的时候，就会把调用handleClick()实例方法打印出h1
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class Title extends Component {
+  handleClick(){
+    console.log('e.target.innerHTML')
+  }
+  render(){
+    return (
+    	<h1 onClick={this.handleClick.bind(this)}>打印标题</h1>
+    )
+  }
+}
+ReactDom.render(<Title/>,document.querySelector('#root'))
+```
+
+你也可以在 bind 的时候给事件监听函数传入一些参数：
+
+```js
+class Title extends Component {
+  handleClick(){
+    console.log('e.target.innerHTML')
+  }
+  render(){
+    return (
+    	<h1 onClick={this.handleClick.bind(this,'Hello')}>打印标题</h1>
+    )
+  }
+}
+```
+新的可控组件方法：
+
+```
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class App extends React.Component{
+	constructor(){
+		super()
+		this.handleClick = this.handleClick.bind(this)
+	}
+	handleClick(){
+		console.log(this)
+	}
+	render(){
+		return (
+			<div>
+				App
+				<button onClick={this.handleClick}>click</button>
+			</div>
+		)
+	}
+}
+ReactDOM.render(<App />,document.querySelect('#root'))
+```
+##### 组件的state 和 setState #####
+
+state：组件的数据状态
+
+setState:接受对象参数（修改组件的数据）
+
+```js
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class App extends React.Component{
+	constructor(){
+		super()
+		this.handleClick = this.handleClick.bind(this)
+		this.state = {
+			liked:false
+		}
+	}
+	handleClick(){
+		this.setState({
+			liked:!this.state.liked
+		})
+	}
+	render(){
+		return(
+			<button onClick={this.handleClick}>{this.state.liked ?'取消' : '点赞'}</button>
+		)
+	}
+}
+ReactDOM.render(<App />,document.getElementById('root'))
+```
+注意：当你调用 setState 的时候，React.js 并不会马上修改 state。而是把这个对象放到一个更新队列里面，稍后才会从队列当中把新的状态提取出来合并到 state 当中，然后再触发组件更新
+```js
+ handleClickOnLikeButton () {
+    this.setState({ count: 0 }) // => this.state.count 还是 undefined
+    this.setState({ count: this.state.count + 1}) // => undefined + 1 = NaN
+    this.setState({ count: this.state.count + 2}) // => NaN + 2 = NaN
+  }
+```
+
+```js
+handleClickOnLikeButton () {
+    this.setState((prevState) => {
+      return { count: 0 }
+    })
+    this.setState((prevState) => {
+      return { count: prevState.count + 1 } // 上一个 setState 的返回是 count 为 0，当前返回 1
+    })
+    this.setState((prevState) => {
+      return { count: prevState.count + 2 } // 上一个 setState 的返回是 count 为 1，当前返回 3
+    })
+    // 最后的结果是 this.state.count 为 3
+  }
+```

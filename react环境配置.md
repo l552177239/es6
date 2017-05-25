@@ -1,4 +1,4 @@
-REACT笔记  
+ REACT笔记  
 
 配置环境：
 
@@ -8,13 +8,13 @@ REACT笔记
 
 	https://git-scm.com/download/win  
 
-第二步安装npm；
-	
-	npm install -g cnpm --registry=https://registry.npm.taobao.org
-
-第三步安装node.js；  
+第二步安装node.js；  
 
 	https://nodejs.org/dist/v6.10.3/node-v6.10.3-x64.msi  
+
+第三步安装npm；
+	
+	npm install -g cnpm --registry=https://registry.npm.taobao.org
 
 第四步安装react；
 	
@@ -41,6 +41,10 @@ REACT笔记
 		Material-UI（react UI库）：
 
 			npm install material-ui react-tap-event-plugin --save
+
+		ANT Desgin（阿里UI）：
+
+			npm install antd --save
 
 #####  正常安装  #####		
 
@@ -78,15 +82,15 @@ REACT笔记
 	
 	查看提交记录：git log
 
-	
 	取消已经缓存的内容：git reset
 
-	
 	也可以通过版本号回滚：git reset --hard [版本号]
 
  	把一个文件删除，并把它从git的仓库中移除：git rm [文件名]
 
 	取消对某个文件的修改：git checkout [文件名]
+
+	忽略上传的文件：vi.gitignore
 
 第三步 推送代码
 	
@@ -97,7 +101,6 @@ REACT笔记
 	如果没有通过 clone 现有仓库，而是直接在本地 git init 的仓库的话，需要先添加远程仓库地址。
 
 	为这个仓库添加一个远程地址：git remote add origin [你的github上的仓库地址]
-
 
 	设置 public key
 		首先需要在本地机器上生成 key：ssh-keygen  
@@ -131,6 +134,12 @@ REACT笔记
 	使用淘宝定制的 cnpm：npm install -g cnpm --registry=https://registry.npm.taobao.org
 
 	检查淘宝定制：cnpm install gulp  
+
+	npm 命令：
+
+		查看全局插件命令：npm list -g --depth
+
+		删除全局环境下yarn包：npm uninstall yarn -g
 
 3.配置React环境  
 	
