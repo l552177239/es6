@@ -72,6 +72,10 @@
 
 	创建a.html：touch a.html  
 
+	进入编辑.gitignore：vim .gitignore
+
+	添加：/[文件夹名]
+
 	将文件添加到缓存获得 Git 的跟踪：git add（. -A *）
 
 	查看当前版本库各个文件的状态：git status
